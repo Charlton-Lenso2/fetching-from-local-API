@@ -1,4 +1,4 @@
-const API_URL = "http://localhost/students";
+const API_URL = "http://localhost:3000/students";
 
 export const getStudents = async () => {
   const response = await fetch(API_URL);
@@ -13,11 +13,17 @@ export const getStudents = async () => {
 export const addStudent = async (student) => {
   const response = await fetch(API_URL, {
     method: "POST",
+
     headers: {
       "Content-Type": "application/json",
     },
+
     body: JSON.stringify(student),
   });
 
-  return response.json;
+  if (!response.ok) {
+    throw new Error("Failed to add student");
+  }
+
+  return response.json();
 };
